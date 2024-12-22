@@ -78,13 +78,12 @@ class EndpointV3Compatibility:
 
     def make_predict(self, helper: Communicator | None = None):
         def _predict(*data) -> tuple:
-            data = json.dumps(
-                {
-                    "data": data,
-                    "fn_index": self.fn_index,
-                    "session_hash": self.client.session_hash,
-                }
-            )
+            data = {
+                "data": list(data),
+                "fn_index": self.fn_index,
+                "session_hash": self.client.session_hash,
+            }
+    
             hash_data = json.dumps(
                 {
                     "fn_index": self.fn_index,
